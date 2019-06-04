@@ -1,0 +1,98 @@
+.btn-keybord-close {
+    width: 60px;
+    height: 60px;
+    line-height: 50px;
+    font-size: 30px;
+}
+
+.btn-keybord-number {
+    margin-right: 5px;
+    font-size: 30px;
+    width: 60px;
+    height: 60px;
+}
+
+.btn-keybord-operate {
+    width: 125px;
+    height: 60px;
+    font-size: 30px;
+    margin-right: 5px;
+}
+
+#numbermykeybord .height-145 {
+    width: 60px !important;
+    height: 125px !important;
+}
+
+#numbermykeybord {
+    padding: 5px;
+    background: #dddddd;
+    position: fixed;
+    z-index: 10;
+    top: 15%;
+    left: 40%;
+}
+
+#internationalmykeybord {
+    padding: 5px;
+    background: #dddddd;
+    position: fixed;
+    z-index: 10;
+    top: 15%;
+    left: 5%;
+}
+
+#numbermykeybord .caption,
+#internationalmykeybord .caption {
+    text-align: center;
+    color: #000;
+}
+
+#numberkeybordinputtext {
+    height: 60px !important;
+    width: 195px !important;
+}
+
+#internationalkeybordinputtext {
+    height: 60px !important;
+    width: 580px !important;
+    margin-right: 5px;
+}
+
+.mykeybord-padding-left,
+.mykeybord-padding-right {
+    float: left;
+}
+
+.EnterButton {
+    background-image: url(../image/Enter.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#numbermykeybord .form-inline,
+#internationalmykeybord .form-inline {
+    margin-top: 5px !important;
+}
+
+#internationalmykeybord .width-150 {
+    width: 156px !important;
+}
+
+#internationalmykeybord .width-280 {
+    width: 100%;
+}
+
+#internationalmykeybord .color-word {
+    color: #3775A8
+}
+
+#internationalmykeybord .line-1 {
+    width: 780px;
+    margin: 0px auto;
+}
+
+#internationalmykeybord .line-2 {
+    width: 715px;
+    margin: 0px auto;
+}
