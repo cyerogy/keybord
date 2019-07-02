@@ -5,9 +5,9 @@
     'name': "international",
     'keys': [
       ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "!", "?", "+", "-"],
-      ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]"],
-      ["A", "S", "D", "F", "G", "H", "J", "K", "L", ",", "."],
-      ["Caps","Z", "X", "C", "V", "B", "N", "M", "&", "@","Enter"],
+      ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]"],
+      ["a", "s", "d", "f", "g", "h", "j", "k", "l", ",", "."],
+      ["Caps","z", "x", "c", "v", "b", "n", "m", "&", "@","Enter"],
       ["Space"]
     ]
   };
@@ -127,9 +127,22 @@
     caps_button.id = this.type + "_Caps_button";
     caps_button.innerHTML = "Caps";
     caps_button.onclick = function (event) {
+      var key_letters = document.getElementsByClassName("key-letters");
       if (jCommon.checkWordInString(event.target.className,"color-word")){
+        //LowerCase
+        for (var i = 0; i < key_letters.length; i++) {
+          var letter = key_letters[i].innerHTML.toLowerCase();
+          key_letters[i].innerHTML = letter;
+          key_letters[i].id = letter;
+        }
         event.target.className = jCommon.removeClass(event.target.className, "color-word");
       }else{
+        //UpperCase
+        for (var i = 0; i < key_letters.length; i++) {
+          var letter = key_letters[i].innerHTML.toUpperCase();
+          key_letters[i].innerHTML = letter;
+          key_letters[i].id = letter;
+        }
         event.target.className = jCommon.addClass(event.target.className, "color-word");
       }
     }
@@ -153,7 +166,11 @@
           var number_button = document.createElement("button");
           number_button.id = leftlayout[i][j];
           number_button.innerHTML = leftlayout[i][j];
-          number_button.className = "btn btn-default btn-keybord-number";
+          if ((leftlayout[i][j].charCodeAt() >= 97 && leftlayout[i][j].charCodeAt() <= 122) || (leftlayout[i][j].charCodeAt() >= 65 && leftlayout[i][j].charCodeAt() <= 90)){
+            number_button.className = "btn btn-default btn-keybord-number key-letters";
+          }else{
+            number_button.className = "btn btn-default btn-keybord-number";
+          }
           tr.appendChild(number_button);
         }else{
           var specialkeys;
@@ -204,18 +221,7 @@
       if (!event.target.id || event.target.id.length > 1){
         return false;
       }else{
-        var appendstring;
-        if (!jCommon.empty(document.getElementById(self.type + "_Caps_button"))){
-          var clasname = document.getElementById(self.type + "_Caps_button").className;
-          if (jCommon.checkWordInString(clasname, "color-word")) {
-            appendstring = event.target.innerHTML.toUpperCase();
-          } else {
-            appendstring = event.target.innerHTML.toLowerCase();
-          }
-        }else{
-          appendstring = event.target.innerHTML;
-        }
-        document.getElementById(self.type + "keybordinputtext").value = origin_value + appendstring;
+        document.getElementById(self.type + "keybordinputtext").value = origin_value + event.target.innerHTML.replace(/&amp;/g, "&");
       }
     }
     return tbodydiv;
@@ -261,7 +267,7 @@
       var tbody = document.createElement("div");
       tbody.appendChild(this.createKeyBoard());
     }
-    this.table.onclick = function (event) {
+    this.table.onclick = function(event){
       event.stopPropagation();
     }
     this.table.appendChild(tbody);
@@ -278,11 +284,16 @@
       keyboardintance.createSoftKeybord();
       for (var i = 0; i < inputNumberElems.length; i++) {
         (function (i, keyboardintance) {
-          inputNumberElems[i].onfocus = function () {
-            document.getElementById("numbercaption").innerHTML = this.getAttribute("data-title");
+          inputNumberElems[i].onfocus = function (event) {
+            if (!jCommon.empty(document.getElementById("internationalmykeybord"))) {
+              document.getElementById("internationalmykeybord").style.display = "none";
+            }
+            document.getElementById("numbercaption").innerHTML = this.getAttribute("data-keyboard-title");
             keyboardintance.select_index = i;
             keyboardintance.table.style.display = "block";
             document.getElementById("numberkeybordinputtext").value = this.value;
+            document.getElementById("numberkeybordinputtext").focus();
+            event.stopPropagation()
           }
         })(i, keyboardintance)
       }
@@ -292,11 +303,16 @@
       keyboardintance.createSoftKeybord();
       for (var i = 0; i < inputInternationalElems.length; i++) {
         (function (i, keyboardintance) {
-          inputInternationalElems[i].onfocus = function () {
-            document.getElementById("internationalcaption").innerHTML = this.getAttribute("data-title");
+          inputInternationalElems[i].onfocus = function (event) {
+            if (!jCommon.empty(document.getElementById("numbermykeybord"))) {
+              document.getElementById("numbermykeybord").style.display = "none";
+            }
+            document.getElementById("internationalcaption").innerHTML = this.getAttribute("data-keyboard-title");
             keyboardintance.select_index = i;
             keyboardintance.table.style.display = "block";
             document.getElementById("internationalkeybordinputtext").value = this.value;
+            document.getElementById("internationalkeybordinputtext").focus();
+            event.stopPropagation();
           }
         })(i, keyboardintance)
       }
@@ -310,6 +326,5 @@
       }
     })
   }
-  inintSoftKeyboard();
   window.inintSoftKeyboard = inintSoftKeyboard;
 })()
